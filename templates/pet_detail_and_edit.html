@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+  <div class="container">
+    <h1>{{ pet.name }}</h1>
+    <h2>{{pet.species}}</h2>
+    {% if pet.photo_url %}
+      <div class="row d-flex justify-content-center">
+        <div class="col-6 d-flex justify-content-center">
+          <img class="img-fluid" src="{{pet.photo_url}}" />
+        </div>
+      </div>
+    {% endif %}
+    <p>Age: {% if pet.age %} {{pet.age}} {% else %} Unknown {% endif %}</p>
+    <p>{{pet.notes}}</p>
+    <strong>{% if pet.available %}Available!{% else %}Not Available{% endif %}</strong>
+  </div>
+  <div class="pt-3 container">
+    <h1>Edit {{pet.name}}</h1>
+    <form id="edit-pet-form" class="mb-5" action="" method="POST">
+      {% for field in form %}
+        {% if field.widget.input_type != 'hidden' %}
+          {{field.label(class_="")}}
+          {% if field.widget.input_type == 'checkbox' %}
+            {{field(class_="form-check")}}
+          {% else %}
+            {{field(class_="form-control")}}
+          {% endif %}  
+          {% for error in field.errors %}
+            <div class="alert alert-danger">{{error}}</div>
+          {% endfor %}
+          <br/>
+        {% endif %}
+      {% endfor %}
+      <button class="btn btn-primary" type="submit">Submit Changes</button>
+    </form>
+  </div>
+{% endblock %}

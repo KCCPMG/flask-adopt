@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+ <div class="pt-3 container">
+    <h1>Add a Pet</h1>
+    <form id="add-pet-form" class="mb-5" action="" method="POST">
+      {% for field in form %}
+        {% if field.widget.input_type != 'hidden' %}
+          {{field.label(class_="")}}
+          {% if field.widget.input_type == 'checkbox' %}
+            {{field(class_="form-check")}}
+          {% else %}
+            {{field(class_="form-control")}}
+          {% endif %}  
+          {% for error in field.errors %}
+            <div class="alert alert-danger">{{error}}</div>
+          {% endfor %}
+          <br/>
+        {% endif %}
+      {% endfor %}
+      <button class="btn btn-primary" type="submit">Submit</button>
+    </form>
+  </div>
+    
+{% endblock %}
